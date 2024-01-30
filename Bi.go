@@ -2,7 +2,7 @@ package bi
 
 import "strconv"
 
-func Dividing(Divident, Divisor Data) Data {
+func DIVIDE(Divident, Divisor Data) Data {
 	var result Data
 	return result
 }
@@ -58,39 +58,56 @@ func BoolToBit(condition bool) Bit {
 		return '0'
 	}
 }
-func BitFlip(a Data, enable byte) Data {
+func ADD(a Data, b Data, c Bit) (Data, Bit) {
 	var result Data
-	if enable == '1' {
-		for _, value := range a {
-			if value == '1' {
-				result = result + "0"
-			} else {
-				result = result + "1"
-			}
-		}
-	} else {
-		result = a
+	for i := len(a) - 1; i >= 0; i-- {
+		va := Bit(a[i])
+		bv := Bit(b[i])
+		axorb := XOR(va, bv)
+		result = result + XOR(c, axorb).Data()
+		c = OR(AND(va, bv), AND(axorb, c))
 	}
-	return result
-}
-func ADD(a Data, b Data, c byte) (Data, byte) {
-	result := a
 	return result, c
 }
-func signedBiToDeci(Binary Data) int {
-	n := 1
-	Decimal := 0
-	for i := 1; i < len(Binary)-1; i++ {
-		n *= 2
+func AND(a Bit, b Bit) Bit {
+	if a.bool() && b.bool() {
+		return '1'
 	}
-	if Binary[0] == '1' {
-		Decimal -= n * 2
+	return '0'
+}
+func OR(a Bit, b Bit) Bit {
+	if a.bool() || b.bool() {
+		return '1'
 	}
-	for i := 1; i < len(Binary); i++ {
-		if Binary[i] == '1' {
-			Decimal += n
-		}
-		n /= 2
+	return '0'
+}
+func NOT(a Bit) Bit {
+	if a.bool() {
+		return '1'
 	}
-	return Decimal
+	return '0'
+}
+func NAND(a Bit, b Bit) Bit {
+	if !(a.bool() && b.bool()) {
+		return '1'
+	}
+	return '0'
+}
+func NOR(a Bit, b Bit) Bit {
+	if !(a.bool() || b.bool()) {
+		return '1'
+	}
+	return '0'
+}
+func XOR(a Bit, b Bit) Bit {
+	if a != b {
+		return '1'
+	}
+	return '0'
+}
+func XNOR(a Bit, b Bit) Bit {
+	if a == b {
+		return '1'
+	}
+	return '0'
 }
