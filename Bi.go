@@ -7,18 +7,6 @@ func Dividing(Divident, Divisor Data) Data {
 	return result
 }
 
-func BiToDeci(Binary Data) int {
-	n := 1
-	Decimal := 0
-
-	for i := len(Binary) - 1; i >= 0; i-- {
-		if Binary[i] == '1' {
-			Decimal += n
-		}
-		n *= 2
-	}
-	return Decimal
-}
 func DeciToBi(Decimal int, n int) Data {
 	var Binary Data
 	a := 1
